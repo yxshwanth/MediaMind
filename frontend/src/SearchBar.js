@@ -16,6 +16,7 @@ function SearchBar({ onSearch }) {
     onSearch(query, filters);
   };
 
+  // The autoComplete attribute is set to "off" to disable browser suggestions.
   return (
     <form onSubmit={handleSubmit} className="d-flex flex-wrap align-items-center gap-2 mb-3">
       <input
@@ -25,6 +26,7 @@ function SearchBar({ onSearch }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         style={{ maxWidth: "200px" }}
+        autoComplete="off"
       />
       <select
         className="form-select"
@@ -55,6 +57,15 @@ function SearchBar({ onSearch }) {
       />
       <button type="submit" className="btn btn-primary">
         <i className="fas fa-search me-1"></i> Search
+      </button>
+      <button type="button" className="btn btn-secondary" onClick={() => {
+        setQuery("");
+        setType("all");
+        setMinResolution("");
+        setMinDuration("");
+        onSearch("", { type: "all", minResolution: "", minDuration: "" });
+      }}>
+        Clear
       </button>
     </form>
   );

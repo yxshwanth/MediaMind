@@ -1,35 +1,28 @@
-import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React from "react";
+import { Modal, Box, Typography } from "@mui/material";
 
 function MediaModal({ show, onHide, media }) {
   if (!media) return null;
-  const { type, url, filename, tags, metadata } = media;
-  
+
+  let mediaContent;
+  if (media.type === "image") {
+    mediaContent = <img src={media.url} alt={media.filename} style={{ maxWidth: "100%", maxHeight: "400px" }} />;
+  } else if (media.type === "video") {
+    mediaContent = <video src={media.url} controls style={{ maxWidth: "100%", maxHeight: "400px" }} />;
+  } else if (media.type === "audio") {
+    mediaContent = <audio src={media.url} controls />;
+  }else if (media.type === "text") {
+      mediaContent = <audio src={media.url} alt={media.filename} style={{ maxWidth: "100%", maxHeight: "400px" }} />;
+  } else {
+    mediaContent = <p>Unsupported file type.</p>;
+  }
+
   return (
-    <Modal show={show} onHide={onHide} size="lg" centered>
-      <Modal.Header closeButton>
-        <Modal.Title>{filename}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {type === 'image' && (
-          <img src={url} alt={filename} className="img-fluid" style={{ width: '100%' }} />
-        )}
-        {type === 'video' && (
-          <video src={url} controls className="img-fluid" style={{ width: '100%' }} />
-        )}
-        {type === 'audio' && (
-          <audio src={url} controls className="w-100" />
-        )}
-        <div className="mt-3">
-          <p><strong>Type:</strong> {type}</p>
-          {metadata.width && <p><strong>Resolution:</strong> {metadata.width}x{metadata.height}px</p>}
-          {metadata.duration && <p><strong>Duration:</strong> {metadata.duration}s</p>}
-          <p><strong>Tags:</strong> {tags && tags.join(', ')}</p>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>Close</Button>
-      </Modal.Footer>
+    <Modal open={show} onClose={onHide}>
+      <Box className="modal-box">
+        <Typography variant="h6">{media.filename}</Typography>
+        {mediaContent}
+      </Box>
     </Modal>
   );
 }
