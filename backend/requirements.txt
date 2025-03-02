@@ -1,0 +1,13 @@
+Flask
+flask-cors
+firebase-admin
+elasticsearch
+python-dotenv
+torch
+ftfy
+regex
+Pillow
+opencv-python
+musicnn
+librosa
+numpy
